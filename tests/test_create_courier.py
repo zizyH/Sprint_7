@@ -7,8 +7,12 @@ from helpers import build_courier_payload, create_courier
 class TestCreateCourier:
 
     @allure.title("Создание курьера со всеми полями возвращает 201 и ok=true")
-    def test_create_courier_all_fields_returns_201_and_ok_true(self):
+    def test_create_courier_all_fields_returns_201_and_ok_true(self, cleanup_courier):
         payload = build_courier_payload()
+        
+        # Добавляем в очередь на удаление (сделает фикстура после теста)
+        cleanup_courier(payload["login"], payload["password"])
+        
         response = create_courier(payload)
 
         assert response.status_code == 201

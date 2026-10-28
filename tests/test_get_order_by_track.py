@@ -1,6 +1,8 @@
 import allure
+import requests
 
 from helpers import get_order_by_track
+from urls import BASE_URL, ORDERS_TRACK
 
 
 @allure.feature("Получение заказа по номеру")
@@ -17,8 +19,6 @@ class TestGetOrderByTrack:
 
     @allure.title("Получение заказа без параметра t возвращает 400")
     def test_get_order_by_track_without_t_returns_400(self):
-        import requests
-        from urls import BASE_URL, ORDERS_TRACK
         response = requests.get(f"{BASE_URL}{ORDERS_TRACK}")
 
         assert response.status_code == 400
